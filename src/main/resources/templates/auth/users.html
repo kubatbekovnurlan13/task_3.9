@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+  <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+
+<h1>Hello Welcome to Users page!</h1>
+<div>
+  <table>
+    <thead>
+    <tr>
+      <th>User id</th>
+      <th>User name</th>
+      <th>User password</th>
+      <th>User role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user:${users}">
+      <td th:text="${user.getId()}"></td>
+      <td th:text="${user.getUsername()}"></td>
+      <td th:text="${user.getPassword()}"></td>
+      <td th:text="${user.getRoles()}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

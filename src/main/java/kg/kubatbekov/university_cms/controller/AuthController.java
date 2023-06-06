@@ -1,7 +1,7 @@
 package kg.kubatbekov.university_cms.controller;
 
 import kg.kubatbekov.university_cms.model.User;
-import kg.kubatbekov.university_cms.service.RegistrationService;
+import kg.kubatbekov.university_cms.service.UserService;
 import kg.kubatbekov.university_cms.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,18 +17,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AuthController {
 
     private final UserValidator userValidator;
-    private final RegistrationService registrationService;
+    private final UserService userService;
 
     @Autowired
-    public AuthController(UserValidator userValidator, RegistrationService registrationService) {
+    public AuthController(UserValidator userValidator, UserService userService) {
         this.userValidator = userValidator;
-        this.registrationService = registrationService;
+        this.userService = userService;
     }
+
+    @GetMapping("/get-users")
+    public String getUsers(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "auth/users";
+    }
+
 
     @GetMapping("/login")
     public String login() {
         return "auth/login";
     }
+
 
     @GetMapping("/login-error")
     public String loginError(Model model) {
@@ -50,7 +58,7 @@ public class AuthController {
             return "/auth/registration";
 
         user.setRoles("ROLE_USER");
-        registrationService.register(user);
+        userService.save(user);
         return "redirect:/auth/login";
     }
 }

@@ -7,17 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
-public class RegistrationService {
+public class UserService {
     private final UserRepository userRepository;
 
     @Autowired
-    public RegistrationService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Transactional
-    public void register(User user) {
+    public void save(User user) {
         userRepository.save(user);
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 }
