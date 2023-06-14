@@ -2,13 +2,14 @@ package kg.kubatbekov.university_cms.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserEntity {
     @Id
     @Column(name = "id")
@@ -23,7 +24,4 @@ public class UserEntity {
 
     @Column(name = "roles")
     private String roles;
-
-    public UserEntity() {
-    }
 }
