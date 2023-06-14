@@ -1,6 +1,6 @@
 package kg.kubatbekov.university_cms.controllerTest;
 
-import kg.kubatbekov.university_cms.controller.MainController;
+import kg.kubatbekov.university_cms.controller.mainContollers.MainController;
 import kg.kubatbekov.university_cms.service.TimetableService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class MainControllerTest {
 
 //    @Test
 //    public void testIndex() throws Exception {
-//        File login = ResourceUtils.getFile("classpath:templates/main.html");
+//        File login = ResourceUtils.getFile("classpath:templates/mainContollers.html");
 //        String html = new String(Files.readAllBytes(login.toPath()));
 //
 //        this.mockMvc.perform(get(Path.of("/").toUri()))

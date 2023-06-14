@@ -1,6 +1,6 @@
 package kg.kubatbekov.university_cms.config;
 
-import kg.kubatbekov.university_cms.service.JpaUserDetailsService;
+import kg.kubatbekov.university_cms.service.UserEntityDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,11 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final JpaUserDetailsService jpaUserDetailsService;
+    private final UserEntityDetailsService userEntityDetailsService;
 
-
-    public SecurityConfig(JpaUserDetailsService jpaUserDetailsService) {
-        this.jpaUserDetailsService = jpaUserDetailsService;
+    public SecurityConfig(UserEntityDetailsService userEntityDetailsService) {
+        this.userEntityDetailsService = userEntityDetailsService;
     }
 
     @Bean
@@ -31,7 +30,7 @@ public class SecurityConfig {
                 .requestMatchers("/auth/get-users").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .userDetailsService(jpaUserDetailsService)
+                .userDetailsService(userEntityDetailsService)
                 .formLogin().loginPage("/auth/login")
                 .loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/", true)

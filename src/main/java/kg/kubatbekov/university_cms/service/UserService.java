@@ -1,7 +1,7 @@
 package kg.kubatbekov.university_cms.service;
 
 
-import kg.kubatbekov.university_cms.model.User;
+import kg.kubatbekov.university_cms.model.UserEntity;
 import kg.kubatbekov.university_cms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,11 +19,11 @@ public class UserService {
     }
 
     @Transactional
-    public void save(User user) {
-        userRepository.save(user);
+    public void save(UserEntity userEntity) {
+        userRepository.save(userEntity);
     }
 
-    public List<User> findAll(){
+    public List<UserEntity> findAll(){
         return userRepository.findAll();
     }
 }

@@ -19,11 +19,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user:${users}">
-      <td th:text="${user.getId()}"></td>
-      <td th:text="${user.getUsername()}"></td>
-      <td th:text="${user.getPassword()}"></td>
-      <td th:text="${user.getRoles()}"></td>
+    <tr th:each="userEntity:${users}">
+      <td th:text="${userEntity.getId()}"></td>
+      <td th:text="${userEntity.getUsername()}"></td>
+      <td th:text="${userEntity.getPassword()}"></td>
+      <td th:text="${userEntity.getRoles()}"></td>
     </tr>
     </tbody>
   </table>

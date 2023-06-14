@@ -6,10 +6,10 @@ import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "users ")
+@Table(name = "users")
 @Getter
 @Setter
-public class User {
+public class UserEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,28 +24,28 @@ public class User {
     @Column(name = "roles")
     private String roles;
 
-    public User() {
+    public UserEntity() {
     }
 
-    public User(String username, String password) {
+    public UserEntity(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public User(String username, String password, String roles) {
+    public UserEntity(String username, String password, String roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
 
-    public User(int id, String username, String password, String roles) {
+    public UserEntity(int id, String username, String password, String roles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
 
-    public User(UserDetails userDetails) {
+    public UserEntity(UserDetails userDetails) {
         this.username = userDetails.getUsername();
         this.password = userDetails.getPassword();
         this.roles = userDetails.getAuthorities().toString();

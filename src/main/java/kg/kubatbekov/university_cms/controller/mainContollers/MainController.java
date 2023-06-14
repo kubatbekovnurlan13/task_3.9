@@ -1,4 +1,4 @@
-package kg.kubatbekov.university_cms.controller;
+package kg.kubatbekov.university_cms.controller.mainContollers;
 
 import kg.kubatbekov.university_cms.service.TimetableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ public class MainController {
 
     @GetMapping("/")
     public String getIndex() {
+        System.out.println("been here!");
         createTimetable();
         return "main";
     }

@@ -1,6 +1,6 @@
-package kg.kubatbekov.university_cms.controller;
+package kg.kubatbekov.university_cms.controller.mainContollers;
 
-import kg.kubatbekov.university_cms.model.User;
+import kg.kubatbekov.university_cms.model.UserEntity;
 import kg.kubatbekov.university_cms.service.UserService;
 import kg.kubatbekov.university_cms.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,20 +45,20 @@ public class AuthController {
     }
 
     @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("user") User user) {
+    public String registrationPage(@ModelAttribute("user") UserEntity userEntity) {
         return "auth/registration";
     }
 
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("user") User user,
+    public String performRegistration(@ModelAttribute("user") UserEntity userEntity,
                                       BindingResult bindingResult) {
-        userValidator.validate(user, bindingResult);
+        userValidator.validate(userEntity, bindingResult);
 
         if (bindingResult.hasErrors())
             return "/auth/registration";
 
-        user.setRoles("ROLE_USER");
-        userService.save(user);
+        userEntity.setRoles("ROLE_USER");
+        userService.save(userEntity);
         return "redirect:/auth/login";
     }
 }
