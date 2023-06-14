@@ -26,28 +26,4 @@ public class UserEntity {
 
     public UserEntity() {
     }
-
-    public UserEntity(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public UserEntity(String username, String password, String roles) {
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public UserEntity(int id, String username, String password, String roles) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public UserEntity(UserDetails userDetails) {
-        this.username = userDetails.getUsername();
-        this.password = userDetails.getPassword();
-        this.roles = userDetails.getAuthorities().toString();
-    }
 }
