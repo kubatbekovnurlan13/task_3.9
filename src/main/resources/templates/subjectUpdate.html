@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Subject update form</h1>
+
+<form th:action="@{/subject/update(subjectId=${subject.getSubjectId()})}"  th:object="${subject}"  method="post">
+    <label for="subjectCode">SubjectCode</label>
+    <input type="text" th:field="*{subjectCode}" id="subjectCode" placeholder="subjectCode">
+    <span th:if="${#fields.hasErrors('subjectCode')}" th:errors="*{subjectCode}"></span>
+
+    <label for="subjectName">SubjectName</label>
+    <input type="text" th:field="*{subjectName}" id="subjectName" placeholder="subjectName">
+    <span th:if="${#fields.hasErrors('subjectName')}" th:errors="*{subjectName}"></span>
+
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

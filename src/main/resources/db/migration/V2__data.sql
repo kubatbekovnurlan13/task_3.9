@@ -209,7 +209,6 @@ VALUES ('student_21', 'last_21', 20, 5),
        ('student_25', 'last_25', 20, 5);
 
 insert into users (username, password, roles)
-VALUES ('user', 'user', 'ROLE_USER'),
-       ('student', 'student', 'ROLE_STUDENT'),
+VALUES ('student', 'student', 'ROLE_STUDENT'),
        ('teacher', 'teacher', 'ROLE_TEACHER'),
        ('admin', 'admin', 'ROLE_ADMIN');

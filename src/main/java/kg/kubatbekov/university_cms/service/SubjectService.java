@@ -35,7 +35,7 @@ public class SubjectService {
         subjectRepository.save(subject);
     }
 
-    public Optional<Subject> findById(int id){
+    public Optional<Subject> findById(int id) {
         return subjectRepository.findById(id);
     }
 

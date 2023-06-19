@@ -20,7 +20,6 @@ public class MainController {
 
     @GetMapping("/")
     public String getIndex() {
-        System.out.println("been here!");
         createTimetable();
         return "main";
     }

@@ -67,11 +67,11 @@ CREATE TABLE IF NOT EXISTS lessons
     professor_id int not null,
     timeslot_id  int not null,
     room_id      int not null,
-    foreign key (group_id) references groups (group_id) ON DELETE SET NULL,
-    foreign key (subject_id) references subjects (subject_id) ON DELETE SET NULL,
-    foreign key (professor_id) references professors (professor_id) ON DELETE SET NULL,
-    foreign key (timeslot_id) references timeslots (timeslot_id) ON DELETE SET NULL,
-    foreign key (room_id) references rooms (room_id) ON DELETE SET NULL
+    foreign key (group_id) references groups (group_id) ON DELETE CASCADE,
+    foreign key (subject_id) references subjects (subject_id) ON DELETE CASCADE,
+    foreign key (professor_id) references professors (professor_id) ON DELETE CASCADE,
+    foreign key (timeslot_id) references timeslots (timeslot_id) ON DELETE CASCADE,
+    foreign key (room_id) references rooms (room_id) ON DELETE CASCADE
 );
 
 -- creation of table of students
