@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Group page</title>
+</head>
+<body>
+<h1>Group add form</h1>
+
+<form th:action="@{/group/save}" th:object="${group}"
+      th:method="POST" enctype="utf8">
+    <div>
+        <label for="groupName">Enter groupName</label>
+        <input th:field="*{groupName}" id="groupName"/>
+        <p th:each="error: ${#fields.errors('groupName')}"
+           th:text="${error}">GroupName error</p>
+    </div>
+    <div>
+        <label for="grade">Enter grade</label>
+        <input th:field="*{grade}" id="grade"/>
+        <p th:each="error: ${#fields.errors('grade')}"
+           th:text="${error}">Grade error</p>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

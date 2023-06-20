@@ -17,6 +17,8 @@
             <th>Group name</th>
             <th>Group size</th>
             <th>Group Subjects</th>
+            <th>Delete</th>
+            <th> Update</th>
         </tr>
         </thead>
         <tbody>
@@ -26,9 +28,18 @@
             <td th:text="${group.getGroupName()}"></td>
             <td th:text="${group.getGroupSize()}"></td>
             <td th:text="${group.getSubjectsAsString()}"></td>
+            <td>
+                <a th:href="@{/group/delete(groupId=${group.getGroupId()})}">Delete</a>
+            </td>
+            <td>
+                <a th:href="@{/group/updateForm(groupId=${group.getGroupId()})}">Update</a>
+            </td>
         </tr>
         </tbody>
     </table>
+    <a href="/group/add">Save new Group</a>
+    <br>
+    <a href="/">Main</a>
 </div>
 
 </body>

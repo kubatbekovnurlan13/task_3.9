@@ -30,7 +30,7 @@ public class SubjectController {
     @GetMapping("/list")
     public String getSubjects(Model model) {
         model.addAttribute("subjects", subjectService.findAll());
-        return "subjects";
+        return "subject/subjects";
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
@@ -43,7 +43,7 @@ public class SubjectController {
     @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
     @GetMapping("/add")
     public String addSubject(@ModelAttribute("subject") Subject subject) {
-        return "subjectAdd";
+        return "subject/subjectAdd";
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
@@ -59,7 +59,7 @@ public class SubjectController {
         Subject subject = subjectService.findById(subjectId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid subject id " + subjectId));
         model.addAttribute("subject", subject);
-        return "subjectUpdate";
+        return "subject/subjectUpdate";
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
@@ -69,16 +69,16 @@ public class SubjectController {
         return "redirect:/subject/list";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/setTeacher")
     public String setTeacherForm(@RequestParam int subjectId, Model model) {
         model.addAttribute("professors", professorService.findAll());
         model.addAttribute("subjectId", subjectId);
         model.addAttribute("professor", new Professor());
-        return "subjectTeacher";
+        return "subject/subjectTeacher";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("/setTeacher")
     public String setTeacher(@RequestParam int subjectId, Integer professorId) {
         Subject subject = subjectService.findById(subjectId).get();
@@ -94,16 +94,16 @@ public class SubjectController {
     }
 
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/setGroup")
     public String setGroupForm(@RequestParam int subjectId, Model model) {
         model.addAttribute("groups", groupService.findAll());
         model.addAttribute("subjectId", subjectId);
         model.addAttribute("group", new Group());
-        return "subjectGroup";
+        return "subject/subjectGroup";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("/setGroup")
     public String setGroup(@RequestParam int subjectId, Integer groupId) {
         Subject subject = subjectService.findById(subjectId).get();
@@ -118,7 +118,7 @@ public class SubjectController {
         return "redirect:/subject/list";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/reassignTeacher")
     public String reassignTeacherForm(@RequestParam int subjectId, Model model) {
         Subject subject = subjectService.findById(subjectId).get();
@@ -126,10 +126,10 @@ public class SubjectController {
         model.addAttribute("professors", subject.getProfessors());
         model.addAttribute("subjectId", subjectId);
         model.addAttribute("professor", new Professor());
-        return "subjectTeacherReassign";
+        return "subject/subjectTeacherReassign";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("/reassignTeacher")
     public String reassignTeacher(@RequestParam int subjectId, Integer professorId) {
         Subject subject = subjectService.findById(subjectId).get();
@@ -144,7 +144,7 @@ public class SubjectController {
         return "redirect:/subject/list";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/reassignGroup")
     public String  reassignGroupForm(@RequestParam int subjectId, Model model) {
         Subject subject = subjectService.findById(subjectId).get();
@@ -152,10 +152,10 @@ public class SubjectController {
         model.addAttribute("groups", subject.getGroups());
         model.addAttribute("subjectId", subjectId);
         model.addAttribute("group", new Group());
-        return "subjectGroupReassign";
+        return "subject/subjectGroupReassign";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("/reassignGroup")
     public String reassignGroup(@RequestParam int subjectId, Integer groupId) {
         Subject subject = subjectService.findById(subjectId).get();
