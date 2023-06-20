@@ -17,7 +17,10 @@
         <th> Subject code</th>
         <th> Update</th>
         <th> Delete</th>
-        <th> Set Teacher</th>
+        <th> Assign Teacher</th>
+        <th> Reassign Teacher</th>
+        <th> Assign Group</th>
+        <th> Reassign Group</th>
     </tr>
     </thead>
     <tbody>
@@ -33,6 +36,15 @@
         </td>
         <td>
             <a th:href="@{/subject/setTeacher(subjectId=${subject.getSubjectId()})}">Set Teacher</a>
+        </td>
+        <td>
+            <a th:href="@{/subject/reassignTeacher(subjectId=${subject.getSubjectId()})}">Reassign Teacher</a>
+        </td>
+        <td>
+            <a th:href="@{/subject/setGroup(subjectId=${subject.getSubjectId()})}">Set Group</a>
+        </td>
+        <td>
+            <a th:href="@{/subject/reassignGroup(subjectId=${subject.getSubjectId()})}">Reassign Group</a>
         </td>
     </tr>
     </tbody>

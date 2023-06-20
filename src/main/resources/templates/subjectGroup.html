@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Subject Group</title>
+  <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+
+<h1>Set group to subject!</h1>
+
+<form th:action="@{/subject/setGroup(subjectId=${subjectId})}"
+      th:object="${group}"
+      method="post">
+
+  <label for="dropDownList">Choose a group:</label>
+  <select id="dropDownList" th:field="*{groupId}" >
+    <option th:each="group : ${groups}"
+            th:value="${group.getGroupId()}"
+            th:text="${group.getGroupName()}"></option>
+    <input  th:field="*{groupId}" type="submit" value="Submit">
+  </select>
+</form>
+</body>
+</html>

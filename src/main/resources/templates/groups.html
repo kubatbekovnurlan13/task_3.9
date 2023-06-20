@@ -16,6 +16,7 @@
             <th>Group grade</th>
             <th>Group name</th>
             <th>Group size</th>
+            <th>Group Subjects</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
             <td th:text="${group.getGrade()}"></td>
             <td th:text="${group.getGroupName()}"></td>
             <td th:text="${group.getGroupSize()}"></td>
+            <td th:text="${group.getSubjectsAsString()}"></td>
         </tr>
         </tbody>
     </table>

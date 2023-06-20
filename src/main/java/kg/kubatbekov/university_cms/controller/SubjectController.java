@@ -1,7 +1,9 @@
 package kg.kubatbekov.university_cms.controller;
 
+import kg.kubatbekov.university_cms.model.Group;
 import kg.kubatbekov.university_cms.model.Professor;
 import kg.kubatbekov.university_cms.model.Subject;
+import kg.kubatbekov.university_cms.service.GroupService;
 import kg.kubatbekov.university_cms.service.ProfessorService;
 import kg.kubatbekov.university_cms.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +12,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 @RequestMapping("/subject")
 public class SubjectController {
     private final SubjectService subjectService;
     private final ProfessorService professorService;
+    private final GroupService groupService;
 
     @Autowired
-    public SubjectController(SubjectService subjectService, ProfessorService professorService) {
+    public SubjectController(SubjectService subjectService, ProfessorService professorService, GroupService groupService) {
         this.subjectService = subjectService;
         this.professorService = professorService;
+        this.groupService = groupService;
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_TEACHER", "ROLE_STUDENT"})
@@ -71,18 +72,101 @@ public class SubjectController {
     @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
     @GetMapping("/setTeacher")
     public String setTeacherForm(@RequestParam int subjectId, Model model) {
-        List<Professor> professors = professorService.findAll();
-        model.addAttribute("professors", professors);
+        model.addAttribute("professors", professorService.findAll());
         model.addAttribute("subjectId", subjectId);
+        model.addAttribute("professor", new Professor());
         return "subjectTeacher";
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
     @PostMapping("/setTeacher")
-    public String setTeacher(@RequestParam int subjectId,@RequestBody Professor professor) {
-        System.out.println("subjectId: " + subjectId);
-        System.out.println("professor: " + professor);
-        System.out.println("professor: " + professor.getProfessorName());
+    public String setTeacher(@RequestParam int subjectId, Integer professorId) {
+        Subject subject = subjectService.findById(subjectId).get();
+        Professor professor = professorService.findById(professorId).get();
+
+        professor.getSubjects().add(subject);
+        subject.getProfessors().add(professor);
+
+        professorService.save(professor);
+        subjectService.save(subject);
+
+        return "redirect:/subject/list";
+    }
+
+
+    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @GetMapping("/setGroup")
+    public String setGroupForm(@RequestParam int subjectId, Model model) {
+        model.addAttribute("groups", groupService.findAll());
+        model.addAttribute("subjectId", subjectId);
+        model.addAttribute("group", new Group());
+        return "subjectGroup";
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @PostMapping("/setGroup")
+    public String setGroup(@RequestParam int subjectId, Integer groupId) {
+        Subject subject = subjectService.findById(subjectId).get();
+        Group group = groupService.findById(groupId).get();
+
+        group.getSubjects().add(subject);
+        subject.getGroups().add(group);
+
+        groupService.save(group);
+        subjectService.save(subject);
+
+        return "redirect:/subject/list";
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @GetMapping("/reassignTeacher")
+    public String reassignTeacherForm(@RequestParam int subjectId, Model model) {
+        Subject subject = subjectService.findById(subjectId).get();
+
+        model.addAttribute("professors", subject.getProfessors());
+        model.addAttribute("subjectId", subjectId);
+        model.addAttribute("professor", new Professor());
+        return "subjectTeacherReassign";
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @PostMapping("/reassignTeacher")
+    public String reassignTeacher(@RequestParam int subjectId, Integer professorId) {
+        Subject subject = subjectService.findById(subjectId).get();
+        Professor professor = professorService.findById(professorId).get();
+
+        professor.getSubjects().remove(subject);
+        subject.getProfessors().remove(professor);
+
+        professorService.save(professor);
+        subjectService.save(subject);
+
+        return "redirect:/subject/list";
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @GetMapping("/reassignGroup")
+    public String  reassignGroupForm(@RequestParam int subjectId, Model model) {
+        Subject subject = subjectService.findById(subjectId).get();
+
+        model.addAttribute("groups", subject.getGroups());
+        model.addAttribute("subjectId", subjectId);
+        model.addAttribute("group", new Group());
+        return "subjectGroupReassign";
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @PostMapping("/reassignGroup")
+    public String reassignGroup(@RequestParam int subjectId, Integer groupId) {
+        Subject subject = subjectService.findById(subjectId).get();
+        Group group = groupService.findById(groupId).get();
+
+        group.getSubjects().remove(subject);
+        subject.getGroups().remove(group);
+
+        groupService.save(group);
+        subjectService.save(subject);
+
         return "redirect:/subject/list";
     }
 }

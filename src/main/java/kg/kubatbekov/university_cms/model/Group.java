@@ -55,4 +55,13 @@ public class Group {
         subjects.forEach(subject -> subjectIds.add(subject.getSubjectId()));
         return subjectIds;
     }
+
+    public String getSubjectsAsString() {
+        StringBuilder subjectsAsString = new StringBuilder(" ");
+
+        for (Subject subject : subjects) {
+            subjectsAsString.append(subject.getSubjectName()).append(", ");
+        }
+        return subjectsAsString.toString();
+    }
 }

@@ -8,18 +8,19 @@
 </head>
 <body>
 
-<h1>Set teacher to subject!</h1>
+<h1>Set professor to subject!</h1>
 
 <form th:action="@{/subject/setTeacher(subjectId=${subjectId})}"
+      th:object="${professor}"
       method="post">
 
-    <label for="dropDownList">Choose a teacher:</label>
-    <select id="dropDownList" >
+    <label for="dropDownList">Choose a professor:</label>
+    <select id="dropDownList" th:field="*{professorId}" >
         <option th:each="professor : ${professors}"
-                th:value="${professor}"
+                th:value="${professor.getProfessorId()}"
                 th:text="${professor.getProfessorName()}"></option>
+        <input  th:field="*{professorId}" type="submit" value="Submit">
     </select>
-    <input type="submit" value="Submit">
 </form>
 </body>
 </html>
