@@ -25,35 +25,35 @@ public class GroupController {
         return "group/groups";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/delete")
     public String deleteGroup(@RequestParam int groupId) {
         groupService.deleteById(groupId);
         return "redirect:/group/list";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/add")
     public String addGroup(@ModelAttribute("group") Group group) {
         return "group/groupAdd";
     }
 
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("/save")
     public String saveGroup(@ModelAttribute("group") Group group) {
         groupService.save(group);
         return "redirect:/group/list";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/updateForm")
     public String updateGroupForm(@RequestParam int groupId, Model model) {
         Group group = groupService.findById(groupId).get();
         model.addAttribute("group", group);
         return "group/groupUpdate";
     }
-    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("/update")
     public String updateGroup(@RequestParam int groupId, @ModelAttribute("group") Group group) {
         Group oldGroup = groupService.findById(groupId).get();

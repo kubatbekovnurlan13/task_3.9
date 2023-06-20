@@ -79,7 +79,7 @@ public class SubjectController {
     }
 
     @Secured({"ROLE_ADMIN"})
-    @PostMapping("/setTeacher")
+    @PostMapping("/assignTeacher")
     public String setTeacher(@RequestParam int subjectId, Integer professorId) {
         Subject subject = subjectService.findById(subjectId).get();
         Professor professor = professorService.findById(professorId).get();
@@ -95,7 +95,7 @@ public class SubjectController {
 
 
     @Secured({"ROLE_ADMIN"})
-    @GetMapping("/setGroup")
+    @GetMapping("/assignGroup")
     public String setGroupForm(@RequestParam int subjectId, Model model) {
         model.addAttribute("groups", groupService.findAll());
         model.addAttribute("subjectId", subjectId);
@@ -104,7 +104,7 @@ public class SubjectController {
     }
 
     @Secured({"ROLE_ADMIN"})
-    @PostMapping("/setGroup")
+    @PostMapping("/assignGroup")
     public String setGroup(@RequestParam int subjectId, Integer groupId) {
         Subject subject = subjectService.findById(subjectId).get();
         Group group = groupService.findById(groupId).get();
