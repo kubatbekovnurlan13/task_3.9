@@ -24,9 +24,7 @@ public class Student {
     private int age;
 
     @ManyToOne
-    @JoinColumn(
-            name = "group_id", referencedColumnName = "group_id",
-            insertable = false)
+    @JoinColumn(name = "group_id", referencedColumnName = "group_id")
     private Group group;
 
     public Student() {
