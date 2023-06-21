@@ -70,7 +70,7 @@ public class SubjectController {
     }
 
     @Secured({"ROLE_ADMIN"})
-    @GetMapping("/setTeacher")
+    @GetMapping("/assignTeacher")
     public String setTeacherForm(@RequestParam int subjectId, Model model) {
         model.addAttribute("professors", professorService.findAll());
         model.addAttribute("subjectId", subjectId);

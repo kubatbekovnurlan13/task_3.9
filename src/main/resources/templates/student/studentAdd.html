@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Student page</title>
+</head>
+<body>
+<h1>Student add form</h1>
+
+<form th:action="@{/student/save}" th:object="${student}" th:method="POST" enctype="utf8">
+    <div>
+        <label for="studentName">Enter studentName</label>
+        <input th:field="*{studentName}" id="studentName"/>
+        <p th:each="error: ${#fields.errors('studentName')}"
+           th:text="${error}">StudentName error</p>
+    </div>
+    <div>
+        <label for="lastName">Enter lastName</label>
+        <input th:field="*{lastName}" id="lastName"/>
+        <p th:each="error: ${#fields.errors('lastName')}"
+           th:text="${error}">LastName error</p>
+    </div>
+
+    <select th:field="*{group}">
+        <option th:each="group : ${groups}"
+                th:value="${group}"
+                th:text="${group}"></option>
+    </select>
+
+    <div>
+        <label for="age">Enter age</label>
+        <input th:field="*{age}" id="age"/>
+        <p th:each="error: ${#fields.errors('age')}"
+           th:text="${error}">Age error</p>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
