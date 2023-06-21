@@ -10,15 +10,15 @@
 
 <h1>Set group to subject!</h1>
 
-<form th:action="@{/subject/setGroup(subjectId=${subjectId})}"
+<form th:action="@{/subject/assignGroup(subjectId=${subjectId})}"
       th:object="${group}"
       method="post">
 
   <label for="dropDownList">Choose a group:</label>
   <select id="dropDownList" th:field="*{groupId}" >
-    <option th:each="group : ${groups}"
-            th:value="${group.getGroupId()}"
-            th:text="${group.getGroupName()}"></option>
+    <option th:each="g : ${groups}"
+            th:value="${g.getGroupId()}"
+            th:text="${g.getGroupName()}"></option>
     <input  th:field="*{groupId}" type="submit" value="Submit">
   </select>
 </form>

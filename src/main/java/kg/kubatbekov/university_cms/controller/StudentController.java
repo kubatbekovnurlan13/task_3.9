@@ -2,11 +2,9 @@ package kg.kubatbekov.university_cms.controller;
 
 import kg.kubatbekov.university_cms.model.Group;
 import kg.kubatbekov.university_cms.model.Student;
-import kg.kubatbekov.university_cms.model.Subject;
 import kg.kubatbekov.university_cms.service.GroupService;
 import kg.kubatbekov.university_cms.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,11 +48,11 @@ public class StudentController {
     @PostMapping("/save")
     public String saveStudent(@ModelAttribute("student") Student student) {
 
-        System.out.println("Student id: " + student.getStudentId());
-        System.out.println("Student name: " + student.getStudentName());
-        System.out.println("Student group id: " + student.getGroup().getGroupId());
-        System.out.println("Student age: " + student.getAge());
-        System.out.println("Student lastname: " + student.getLastName());
+//        System.out.println("Student id: " + student.getStudentId());
+//        System.out.println("Student name: " + student.getStudentName());
+//        System.out.println("Student group id: " + student.getGroup().getGroupId());
+//        System.out.println("Student age: " + student.getAge());
+//        System.out.println("Student lastname: " + student.getLastName());
 
         studentService.save(student);
         return "redirect:/student/list";
