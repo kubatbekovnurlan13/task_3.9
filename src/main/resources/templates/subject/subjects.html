@@ -9,6 +9,9 @@
 
 <h1>Hello Welcome to Subjects page!</h1>
 
+<a href="/subject/add">Save new Subject</a>
+<br>
+<a href="/">Main</a>
 <table>
     <thead>
     <tr>
@@ -35,13 +38,13 @@
             <a th:href="@{/subject/delete(subjectId=${subject.getSubjectId()})}">Delete</a>
         </td>
         <td>
-            <a th:href="@{/subject/assignTeacher(subjectId=${subject.getSubjectId()})}">Set Teacher</a>
+            <a th:href="@{/subject/assignTeacher(subjectId=${subject.getSubjectId()})}">Assign Teacher</a>
         </td>
         <td>
             <a th:href="@{/subject/reassignTeacher(subjectId=${subject.getSubjectId()})}">Reassign Teacher</a>
         </td>
         <td>
-            <a th:href="@{/subject/assignGroup(subjectId=${subject.getSubjectId()})}">Set Group</a>
+            <a th:href="@{/subject/assignGroup(subjectId=${subject.getSubjectId()})}">Assign Group</a>
         </td>
         <td>
             <a th:href="@{/subject/reassignGroup(subjectId=${subject.getSubjectId()})}">Reassign Group</a>
@@ -49,8 +52,6 @@
     </tr>
     </tbody>
 </table>
-<a href="/subject/add">Save new Subject</a>
-<br>
-<a href="/">Main</a>
+
 </body>
 </html>

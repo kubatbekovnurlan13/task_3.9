@@ -1,40 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Students</title>
-  <link rel="stylesheet" th:href="@{/style.css}"/>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
 </head>
 <body>
 
 <h1>Hello Welcome to Students page!</h1>
 
-<table>
-  <thead>
-  <tr>
-    <th> Id</th>
-    <th> Name</th>
-    <th> Last name</th>
-    <th> Group name</th>
-    <th> Age</th>
-    <th> Delete</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="student:${students}">
-    <td th:text="${student.getStudentId()}"></td>
-    <td th:text="${student.getStudentName()}"></td>
-    <td th:text="${student.getLastName()}"></td>
-    <td th:text="${student.getGroup().getGroupName()}"></td>
-    <td th:text="${student.getAge()}"></td>
-    <td>
-      <a th:href="@{/student/delete(studentId=${student.getStudentId()})}">Delete</a>
-    </td>
-  </tr>
-  </tbody>
-</table>
 <a href="/student/add">Save new Student</a>
 <br>
 <a href="/">Main</a>
+<table>
+    <thead>
+    <tr>
+        <th> Id</th>
+        <th> Name</th>
+        <th> Last name</th>
+        <th> Group name</th>
+        <th> Age</th>
+        <th> Delete</th>
+        <th> Update</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student:${students}">
+        <td th:text="${student.getStudentId()}"></td>
+        <td th:text="${student.getStudentName()}"></td>
+        <td th:text="${student.getLastName()}"></td>
+        <td th:text="${student.getGroup().getGroupName()}"></td>
+        <td th:text="${student.getAge()}"></td>
+        <td>
+            <a th:href="@{/student/delete(studentId=${student.getStudentId()})}">Delete</a>
+        </td>
+        <td>
+            <a th:href="@{/student/updateForm(studentId=${student.getStudentId()})}">Update</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

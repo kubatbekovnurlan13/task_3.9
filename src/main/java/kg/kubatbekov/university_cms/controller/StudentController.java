@@ -2,6 +2,7 @@ package kg.kubatbekov.university_cms.controller;
 
 import kg.kubatbekov.university_cms.model.Group;
 import kg.kubatbekov.university_cms.model.Student;
+import kg.kubatbekov.university_cms.model.Subject;
 import kg.kubatbekov.university_cms.service.GroupService;
 import kg.kubatbekov.university_cms.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +48,23 @@ public class StudentController {
     @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
     @PostMapping("/save")
     public String saveStudent(@ModelAttribute("student") Student student) {
-
-//        System.out.println("Student id: " + student.getStudentId());
-//        System.out.println("Student name: " + student.getStudentName());
-//        System.out.println("Student group id: " + student.getGroup().getGroupId());
-//        System.out.println("Student age: " + student.getAge());
-//        System.out.println("Student lastname: " + student.getLastName());
-
         studentService.save(student);
+        return "redirect:/student/list";
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @GetMapping("/updateForm")
+    public String updateStudentForm(@RequestParam int studentId, Model model) {
+        Student student = studentService.findById(studentId).get();
+        model.addAttribute("student", student);
+        model.addAttribute("groups", groupService.findAll());
+        return "student/studentUpdate";
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+    @PostMapping("/update")
+    public String updateStudent(@RequestParam int studentId, @ModelAttribute("student") Student student) {
+        studentService.update(student);
         return "redirect:/student/list";
     }
 }
