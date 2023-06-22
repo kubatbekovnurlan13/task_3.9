@@ -34,6 +34,9 @@ public class SubjectService {
     public void save(Subject subject) {
         subjectRepository.save(subject);
     }
+    public void saveAll(List<Subject> subjects) {
+        subjectRepository.saveAll(subjects);
+    }
 
     public Optional<Subject> findById(int id) {
         return subjectRepository.findById(id);

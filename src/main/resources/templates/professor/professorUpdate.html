@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update</title>
+</head>
+<body>
+<h1>Professor update form</h1>
+
+<form th:action="@{/professor/update(professorId=${professor.getProfessorId()})}"  th:object="${professor}"  method="post">
+  <label for="professorName">ProfessorName</label>
+  <input type="text" th:field="*{professorName}" id="professorName" placeholder="professorName">
+  <span th:if="${#fields.hasErrors('professorName')}" th:errors="*{professorName}"></span>
+
+  <button type="submit">Submit</button>
+</form>
+</body>
+</html>

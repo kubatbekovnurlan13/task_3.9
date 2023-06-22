@@ -19,7 +19,10 @@ public class Professor {
     @Column(name = "professor_name")
     private String professorName;
 
-    @ManyToMany(mappedBy = "professors", fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, mappedBy = "professors", fetch = FetchType.EAGER)
     private List<Subject> subjects;
 
     @OneToMany(mappedBy = "professor")

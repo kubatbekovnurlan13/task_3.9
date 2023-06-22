@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Professor page</title>
+</head>
+<body>
+<h1>Professor add form</h1>
+
+<form th:action="@{/professor/save}" th:object="${professor}" th:method="POST" enctype="utf8">
+    <div>
+        <label for="professorName">Enter professorName</label>
+        <input th:field="*{professorName}" id="professorName"/>
+        <p th:each="error: ${#fields.errors('professorName')}"
+           th:text="${error}">ProfessorName error</p>
+    </div>
+
+<!--    <tr th:each="subject:${subjects}">-->
+<!--        <td>-->
+<!--            <input th:value="${subject.getSubjectId()}" type="checkbox" name="chosenSubjects"-->
+<!--                   th:id="${subject.getSubjectName()}" th:text="${subject.getSubjectName()}">-->
+<!--        </td>-->
+<!--    </tr>-->
+
+    <p>
+        <label>Subjects:
+            <input type="checkbox" name="roles"
+                   th:each="subject : ${subjects}"
+                   th:text="${subject.subjectName}"
+                   th:value="${subject.subjectId}"
+                   th:field="*{subjects}"/>
+        </label>
+    </p>
+
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
