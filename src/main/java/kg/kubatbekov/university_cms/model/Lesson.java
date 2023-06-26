@@ -2,6 +2,7 @@ package kg.kubatbekov.university_cms.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 //      The Course represents a combination of all of the above. It represents a
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Table(name = "lessons")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Lesson {
     @Id
     @Column(name = "lesson_id")
@@ -36,9 +38,6 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private Room room;
-
-    public Lesson() {
-    }
 
     public Lesson(int lessonId, Group group, Subject subject) {
         this.lessonId = lessonId;

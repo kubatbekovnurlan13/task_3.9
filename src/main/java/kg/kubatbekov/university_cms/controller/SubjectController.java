@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/subject")
 public class SubjectController {
@@ -36,6 +38,7 @@ public class SubjectController {
     @Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
     @GetMapping("/delete")
     public String deleteSubject(@RequestParam int subjectId) {
+        System.out.println("delete subject");
         subjectService.deleteById(subjectId);
         return "redirect:/subject/list";
     }
@@ -72,7 +75,13 @@ public class SubjectController {
     @Secured({"ROLE_ADMIN"})
     @GetMapping("/assignTeacher")
     public String assignTeacherForm(@RequestParam int subjectId, Model model) {
-        model.addAttribute("professors", professorService.findAll());
+        Subject subject = subjectService.findById(subjectId).get();
+        List<Professor> professors = professorService.findAll()
+                .stream()
+                .filter(prof -> !prof.getSubjects().contains(subject))
+                .toList();
+
+        model.addAttribute("professors", professors);
         model.addAttribute("subjectId", subjectId);
         model.addAttribute("professor", new Professor());
         return "subject/subjectTeacher";
@@ -97,7 +106,13 @@ public class SubjectController {
     @Secured({"ROLE_ADMIN"})
     @GetMapping("/assignGroup")
     public String assignGroupForm(@RequestParam int subjectId, Model model) {
-        model.addAttribute("groups", groupService.findAll());
+        Subject subject = subjectService.findById(subjectId).get();
+        List<Group> groups = groupService.findAll()
+                .stream()
+                .filter(group -> !group.getSubjects().contains(subject))
+                .toList();
+
+        model.addAttribute("groups", groups);
         model.addAttribute("subjectId", subjectId);
         model.addAttribute("group", new Group());
         return "subject/subjectGroup";

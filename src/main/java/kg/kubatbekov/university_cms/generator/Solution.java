@@ -52,8 +52,8 @@ public class Solution {
                 newChromosome.add(roomId);
 
                 // Add random professor
-                Subject module = timetable.getSubjectById(subjectId);
-                newChromosome.add(module.getRandomProfessorId());
+                Subject subject = timetable.getSubjectById(subjectId);
+                newChromosome.add(subject.getRandomProfessorId());
             }
         }
         this.chromosome = newChromosome;

@@ -2,6 +2,7 @@ package kg.kubatbekov.university_cms.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 @Table(name = "groups")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Group {
     @Id
     @Column(name = "group_id")
@@ -35,9 +37,6 @@ public class Group {
 
     @OneToMany(mappedBy = "group")
     private List<Lesson> lessons;
-
-    public Group() {
-    }
 
     public Group(int groupId, String groupName, int grade) {
         this.groupId = groupId;

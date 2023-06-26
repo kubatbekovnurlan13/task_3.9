@@ -2,6 +2,7 @@ package kg.kubatbekov.university_cms.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.stream.Stream;
 @Table(name = "timeslots")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Timeslot {
     @Id
     @Column(name = "timeslot_id")
@@ -32,9 +34,6 @@ public class Timeslot {
 
     @Transient
     private Duration duration;
-
-    public Timeslot() {
-    }
 
     public Timeslot(int timeslotId, Weekday weekday, String durationValue) {
         this.timeslotId = timeslotId;

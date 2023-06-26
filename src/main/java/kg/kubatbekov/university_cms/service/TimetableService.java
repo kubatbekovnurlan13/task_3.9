@@ -5,6 +5,7 @@ import kg.kubatbekov.university_cms.generator.Population;
 import kg.kubatbekov.university_cms.generator.Solution;
 import kg.kubatbekov.university_cms.generator.Timetable;
 import kg.kubatbekov.university_cms.model.*;
+import kg.kubatbekov.university_cms.model.length.RelationLength;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,41 +19,78 @@ public class TimetableService {
     private final SubjectService subjectService;
     private final GroupService groupService;
     private final LessonService lessonService;
+    private final LengthService lengthService;
 
     @Autowired
-    public TimetableService(
-            RoomService roomService,
-            TimeslotService timeslotService,
-            ProfessorService professorService,
-            SubjectService subjectService,
-            GroupService groupService,
-            LessonService lessonService) {
+    public TimetableService(RoomService roomService,
+                            TimeslotService timeslotService,
+                            ProfessorService professorService,
+                            SubjectService subjectService,
+                            GroupService groupService,
+                            LessonService lessonService,
+                            LengthService lengthService) {
         this.roomService = roomService;
         this.timeslotService = timeslotService;
         this.professorService = professorService;
         this.subjectService = subjectService;
         this.groupService = groupService;
         this.lessonService = lessonService;
+        this.lengthService = lengthService;
     }
 
     public void runTimetableService() {
-        final int INITIAL_SIZE_OF_SUBJECTS_PROFESSORS = 13;
-        final int INITIAL_SIZE_OF_GROUPS_SUBJECTS = 26;
+        int SIZE_OF_SUBJECTS_PROFESSORS = subjectService.subjectsProfessorsSize();
+        int SIZE_OF_GROUPS_SUBJECTS = groupService.groupsSubjectsSize();
+        int DB_SIZE_OF_SUBJECTS_PROFESSORS = lengthService.findSingleValue().getLengthSubjectsProfessorsRelation();
+        int DB_SIZE_OF_GROUPS_SUBJECTS = lengthService.findSingleValue().getLengthSubjectsGroupsRelation();
 
-        int DB_SIZE_OF_SUBJECTS_PROFESSORS = subjectService.subjectsProfessorsSize();
-        int DB_SIZE_OF_GROUPS_SUBJECTS = groupService.groupsSubjectsSize();
-        int DB_COURSES_SIZE = lessonService.findAll().size();
+        int LESSONS_SIZE = lessonService.findLessonsSize();
 
-        if (DB_COURSES_SIZE == 0) {
+        if (DB_SIZE_OF_SUBJECTS_PROFESSORS == 0
+                && DB_SIZE_OF_GROUPS_SUBJECTS == 0
+                && LESSONS_SIZE == 0) {
+            System.out.println("1");
             List<Lesson> timetable = generateTimetable();
             lessonService.saveAll(timetable);
-        } else if (
-                DB_SIZE_OF_SUBJECTS_PROFESSORS != INITIAL_SIZE_OF_SUBJECTS_PROFESSORS
-                        && DB_SIZE_OF_GROUPS_SUBJECTS != INITIAL_SIZE_OF_GROUPS_SUBJECTS) {
+
+            RelationLength relationLength = new RelationLength(SIZE_OF_SUBJECTS_PROFESSORS, SIZE_OF_GROUPS_SUBJECTS);
+            lengthService.update(relationLength);
+        } else if (DB_SIZE_OF_SUBJECTS_PROFESSORS != 0
+                && DB_SIZE_OF_GROUPS_SUBJECTS != 0
+                && LESSONS_SIZE == 0) {
+            System.out.println("2");
+
+            List<Lesson> newTimetable = generateTimetable();
+            lessonService.saveAll(newTimetable);
+        } else if (SIZE_OF_SUBJECTS_PROFESSORS > DB_SIZE_OF_SUBJECTS_PROFESSORS
+                && SIZE_OF_GROUPS_SUBJECTS > DB_SIZE_OF_GROUPS_SUBJECTS) {
+            System.out.println("3");
+
             lessonService.deleteAll();
             List<Lesson> newTimetable = generateTimetable();
             lessonService.saveAll(newTimetable);
+
+            RelationLength relationLength = new RelationLength(SIZE_OF_SUBJECTS_PROFESSORS, SIZE_OF_GROUPS_SUBJECTS);
+            lengthService.update(relationLength);
+        } else {
+            RelationLength relationLength = new RelationLength(SIZE_OF_SUBJECTS_PROFESSORS, SIZE_OF_GROUPS_SUBJECTS);
+            lengthService.update(relationLength);
         }
+
+
+//        final int INITIAL_SIZE_OF_SUBJECTS_PROFESSORS = 13;
+//        final int INITIAL_SIZE_OF_GROUPS_SUBJECTS = 26;
+//
+//        if (LESSONS_SIZE == 0) {
+//            List<Lesson> timetable = generateTimetable();
+//            lessonService.saveAll(timetable);
+//        } else if (
+//                SIZE_OF_SUBJECTS_PROFESSORS != INITIAL_SIZE_OF_SUBJECTS_PROFESSORS
+//                        && SIZE_OF_GROUPS_SUBJECTS != INITIAL_SIZE_OF_GROUPS_SUBJECTS) {
+//            lessonService.deleteAll();
+//            List<Lesson> newTimetable = generateTimetable();
+//            lessonService.saveAll(newTimetable);
+//        }
     }
 
     private List<Lesson> generateTimetable() {
@@ -100,18 +138,35 @@ public class TimetableService {
         // Set up timeslots
         timetable.setTimeslots(timeslots);
 
-        List<Professor> professors = professorService.findAll();
+        List<Professor> professors = getProfessorsWhichHaveSubject();
         // Set up professors
         timetable.setProfessors(professors);
 
-        List<Subject> subjects = subjectService.findAll();
+        List<Subject> subjects = getSubjectsWhichHaveProfessorAndGroup();
         // Set up modules and define the professors that teach them
         timetable.setSubjects(subjects);
 
-        List<Group> groups = groupService.findAll();
+        List<Group> groups = getGroupsWhichHaveSubject();
         // Set up student groups and the modules they take.
         timetable.setGroups(groups);
 
         return timetable;
+    }
+
+    private List<Professor> getProfessorsWhichHaveSubject() {
+        return professorService.findAll()
+                .stream().filter(prof -> !prof.getSubjects().isEmpty()).toList();
+    }
+
+    private List<Subject> getSubjectsWhichHaveProfessorAndGroup() {
+        return subjectService.findAll()
+                .stream()
+                .filter(subject -> !subject.getProfessors().isEmpty() && !subject.getGroups().isEmpty())
+                .toList();
+    }
+
+    private List<Group> getGroupsWhichHaveSubject() {
+        return groupService.findAll()
+                .stream().filter(group -> !group.getSubjects().isEmpty()).toList();
     }
 }

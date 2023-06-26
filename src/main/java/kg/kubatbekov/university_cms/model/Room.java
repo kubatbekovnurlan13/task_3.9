@@ -2,6 +2,7 @@ package kg.kubatbekov.university_cms.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Table(name = "rooms")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Room {
     @Id
     @Column(name = "room_id")
@@ -24,9 +26,6 @@ public class Room {
 
     @OneToMany(mappedBy = "room")
     private List<Lesson> lessons;
-
-    public Room() {
-    }
 
     public Room(int roomId, String roomNumber, int capacity) {
         this.roomId = roomId;

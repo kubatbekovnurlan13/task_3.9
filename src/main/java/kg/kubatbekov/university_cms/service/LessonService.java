@@ -25,6 +25,15 @@ public class LessonService {
         return lessonRepository.findAll();
     }
 
+    public int findLessonsSize() {
+        List<Lesson> lessons = lessonRepository.findAll();
+        if (!lessons.isEmpty()) {
+            return lessons.size();
+        } else {
+            return 0;
+        }
+    }
+
     public void deleteAll() {
         lessonRepository.deleteAll();
     }

@@ -2,12 +2,14 @@ package kg.kubatbekov.university_cms.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "students")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Student {
     @Id
     @Column(name = "student_id")
@@ -27,6 +29,4 @@ public class Student {
     @JoinColumn(name = "group_id", referencedColumnName = "group_id")
     private Group group;
 
-    public Student() {
-    }
 }

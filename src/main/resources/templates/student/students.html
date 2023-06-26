@@ -29,7 +29,7 @@
         <td th:text="${student.getStudentId()}"></td>
         <td th:text="${student.getStudentName()}"></td>
         <td th:text="${student.getLastName()}"></td>
-        <td th:text="${student.getGroup().getGroupName()}"></td>
+        <td th:text="${student?.group?.groupName}"></td>
         <td th:text="${student.getAge()}"></td>
         <td>
             <a th:href="@{/student/delete(studentId=${student.getStudentId()})}">Delete</a>

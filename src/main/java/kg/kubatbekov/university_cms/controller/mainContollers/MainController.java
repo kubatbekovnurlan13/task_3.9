@@ -15,6 +15,7 @@ public class MainController {
     }
 
     private void createTimetable() {
+        System.out.println("Created new timetable");
         timetableService.runTimetableService();
     }
 
