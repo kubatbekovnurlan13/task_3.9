@@ -63,12 +63,16 @@ public class TimetableService {
             List<Lesson> newTimetable = generateTimetable();
             lessonService.saveAll(newTimetable);
         } else if (SIZE_OF_SUBJECTS_PROFESSORS > DB_SIZE_OF_SUBJECTS_PROFESSORS
-                && SIZE_OF_GROUPS_SUBJECTS > DB_SIZE_OF_GROUPS_SUBJECTS) {
+                || SIZE_OF_GROUPS_SUBJECTS > DB_SIZE_OF_GROUPS_SUBJECTS) {
             System.out.println("3");
 
             lessonService.deleteAll();
-            List<Lesson> newTimetable = generateTimetable();
-            lessonService.saveAll(newTimetable);
+            List<Lesson> newTimetable1 = generateTimetable();
+            lessonService.saveAll(newTimetable1);
+
+            lessonService.deleteAll();
+            List<Lesson> newTimetable2 = generateTimetable();
+            lessonService.saveAll(newTimetable2);
 
             RelationLength relationLength = new RelationLength(SIZE_OF_SUBJECTS_PROFESSORS, SIZE_OF_GROUPS_SUBJECTS);
             lengthService.update(relationLength);
@@ -76,21 +80,6 @@ public class TimetableService {
             RelationLength relationLength = new RelationLength(SIZE_OF_SUBJECTS_PROFESSORS, SIZE_OF_GROUPS_SUBJECTS);
             lengthService.update(relationLength);
         }
-
-
-//        final int INITIAL_SIZE_OF_SUBJECTS_PROFESSORS = 13;
-//        final int INITIAL_SIZE_OF_GROUPS_SUBJECTS = 26;
-//
-//        if (LESSONS_SIZE == 0) {
-//            List<Lesson> timetable = generateTimetable();
-//            lessonService.saveAll(timetable);
-//        } else if (
-//                SIZE_OF_SUBJECTS_PROFESSORS != INITIAL_SIZE_OF_SUBJECTS_PROFESSORS
-//                        && SIZE_OF_GROUPS_SUBJECTS != INITIAL_SIZE_OF_GROUPS_SUBJECTS) {
-//            lessonService.deleteAll();
-//            List<Lesson> newTimetable = generateTimetable();
-//            lessonService.saveAll(newTimetable);
-//        }
     }
 
     private List<Lesson> generateTimetable() {
@@ -138,35 +127,18 @@ public class TimetableService {
         // Set up timeslots
         timetable.setTimeslots(timeslots);
 
-        List<Professor> professors = getProfessorsWhichHaveSubject();
+        List<Professor> professors = professorService.findAll();
         // Set up professors
         timetable.setProfessors(professors);
 
-        List<Subject> subjects = getSubjectsWhichHaveProfessorAndGroup();
+        List<Subject> subjects = subjectService.findAll();
         // Set up modules and define the professors that teach them
         timetable.setSubjects(subjects);
 
-        List<Group> groups = getGroupsWhichHaveSubject();
+        List<Group> groups = groupService.findAll();
         // Set up student groups and the modules they take.
         timetable.setGroups(groups);
 
         return timetable;
-    }
-
-    private List<Professor> getProfessorsWhichHaveSubject() {
-        return professorService.findAll()
-                .stream().filter(prof -> !prof.getSubjects().isEmpty()).toList();
-    }
-
-    private List<Subject> getSubjectsWhichHaveProfessorAndGroup() {
-        return subjectService.findAll()
-                .stream()
-                .filter(subject -> !subject.getProfessors().isEmpty() && !subject.getGroups().isEmpty())
-                .toList();
-    }
-
-    private List<Group> getGroupsWhichHaveSubject() {
-        return groupService.findAll()
-                .stream().filter(group -> !group.getSubjects().isEmpty()).toList();
     }
 }

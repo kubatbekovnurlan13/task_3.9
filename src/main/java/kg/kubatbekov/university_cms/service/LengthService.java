@@ -27,6 +27,10 @@ public class LengthService {
     }
 
     public void update(RelationLength relationLength) {
-        lengthRepository.save(relationLength);
+        RelationLength length = findSingleValue();
+        length.setLengthSubjectsGroupsRelation(relationLength.getLengthSubjectsGroupsRelation());
+        length.setLengthSubjectsProfessorsRelation(relationLength.getLengthSubjectsProfessorsRelation());
+
+        lengthRepository.save(length);
     }
 }
