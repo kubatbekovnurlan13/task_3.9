@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Subject page</title>
+</head>
+<body>
+<h1>Subject add form</h1>
+
+<form th:action="@{/subject/save}" th:object="${subject}" th:method="POST" enctype="utf8">
+    <div>
+        <label for="subjectCode">Enter subjectCode</label>
+        <input th:field="*{subjectCode}" id="subjectCode"/>
+        <p th:each="error: ${#fields.errors('subjectCode')}"
+           th:text="${error}">SubjectCode error</p>
+    </div>
+    <div>
+        <label for="subjectName">Enter subjectName</label>
+        <input th:field="*{subjectName}" id="subjectName"/>
+        <p th:each="error: ${#fields.errors('subjectName')}"
+           th:text="${error}">SubjectName error</p>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

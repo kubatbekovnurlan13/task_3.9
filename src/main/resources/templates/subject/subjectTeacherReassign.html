@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Subject Teacher</title>
+  <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+
+<h1>Reassign professor from subject!</h1>
+
+<form th:action="@{/subject/reassignTeacher(subjectId=${subjectId})}"
+      th:object="${professor}"
+      method="post">
+
+  <label for="dropDownList">Choose a professor:</label>
+  <select id="dropDownList" th:field="*{professorId}" >
+    <option th:each="professor : ${professors}"
+            th:value="${professor.getProfessorId()}"
+            th:text="${professor.getProfessorName()}"></option>
+    <input  th:field="*{professorId}" type="submit" value="Submit">
+  </select>
+</form>
+</body>
+</html>

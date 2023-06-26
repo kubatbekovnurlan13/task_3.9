@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subjects</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+
+<h1>Hello Welcome to Subjects page!</h1>
+
+<a href="/subject/add">Save new Subject</a>
+<br>
+<a href="/">Main</a>
+<table>
+    <thead>
+    <tr>
+        <th> Id</th>
+        <th> Name</th>
+        <th> Subject code</th>
+        <th> Update</th>
+        <th> Delete</th>
+        <th> Assign Teacher</th>
+        <th> Reassign Teacher</th>
+        <th> Assign Group</th>
+        <th> Reassign Group</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="subject:${subjects}">
+        <td th:text="${subject.getSubjectId()}"></td>
+        <td th:text="${subject.getSubjectName()}"></td>
+        <td th:text="${subject.getSubjectCode()}"></td>
+        <td>
+            <a th:href="@{/subject/updateForm(subjectId=${subject.getSubjectId()})}">Update</a>
+        </td>
+        <td>
+            <a th:href="@{/subject/delete(subjectId=${subject.getSubjectId()})}">Delete</a>
+        </td>
+        <td>
+            <a th:href="@{/subject/assignTeacher(subjectId=${subject.getSubjectId()})}">Assign Teacher</a>
+        </td>
+        <td>
+            <a th:href="@{/subject/reassignTeacher(subjectId=${subject.getSubjectId()})}">Reassign Teacher</a>
+        </td>
+        <td>
+            <a th:href="@{/subject/assignGroup(subjectId=${subject.getSubjectId()})}">Assign Group</a>
+        </td>
+        <td>
+            <a th:href="@{/subject/reassignGroup(subjectId=${subject.getSubjectId()})}">Reassign Group</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

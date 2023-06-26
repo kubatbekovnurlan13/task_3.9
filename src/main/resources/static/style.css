@@ -1,0 +1,15 @@
+body {
+    background-color: white;
+}
+
+h1 {
+    margin: 50px;
+    width: 100%;
+    text-align: center;
+    color: black;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}

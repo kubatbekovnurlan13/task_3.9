@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Group</title>
+</head>
+<body>
+<h1>Group update form</h1>
+
+<form th:action="@{/group/update(groupId=${group.getGroupId()})}"
+      th:object="${group}"  method="post">
+  <label for="groupName">GroupName</label>
+  <input type="text" th:field="*{groupName}" id="groupName" placeholder="groupName">
+  <span th:if="${#fields.hasErrors('groupName')}" th:errors="*{groupName}"></span>
+
+  <label for="grade">Grade</label>
+  <input type="text" th:field="*{grade}" id="grade" placeholder="grade">
+  <span th:if="${#fields.hasErrors('grade')}" th:errors="*{grade}"></span>
+
+  <button type="submit">Submit</button>
+</form>
+</body>
+</html>
